@@ -70,6 +70,12 @@ class EventsController < ApplicationController
     redirect_to event, notice: I18n.t('flash.participants.joined')
   end
 
+  def unjoin
+    event = Event.find(params[:id])
+    event.participants.find_by_user_id(current_user.id).destroy
+    redirect_to event, notice: I18n.t('flash.participants.joined')
+  end
+
   def follow
     group = Event.find(params[:id]).group
     current_user.follow group
