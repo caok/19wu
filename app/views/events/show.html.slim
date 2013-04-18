@@ -22,13 +22,8 @@ article.event ng-init="event.id=#{@event.id}"
           li
             i.icon-map-marker
             = @event.location
-          li
-            - if @event.has?(current_user)
-              = form_for('', :url => unjoin_event_path(@event), :method => :post) do |f|
-                button.btn.btn-large.btn-warning.btn-block.disabled type="submit" id="join_event" = I18n.t('labels.has_joined_event_button')
-            - else
-              = form_for('', :url => join_event_path(@event), :method => :post) do |f|
-                button.btn.btn-large.btn-success.btn-block type="submit" id="join_event" = I18n.t('labels.join_event_button')
+          li ng-controller="JoinCtrl" ng-init="init(#{event_join_info(@event)})"
+            a.btn.btn-large.btn-block href='{{href}}' ng-click='join()' ng-class='status' {{ label }}
         .event-map == @event.location_guide_html
         hr
         p
